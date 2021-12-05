@@ -4,8 +4,8 @@ exports.up = function (knex) {
     table.uuid('task_id').notNullable();
     table.string('name').notNullable();
     table.string('value').notNullable();
-    table.datetime('created_at').defaultTo(knex.fn.now());
-    table.datetime('updated_at').defaultTo(knex.fn.now());
+    // table.datetime('created_at').defaultTo(knex.fn.now());
+    // table.datetime('updated_at').defaultTo(knex.fn.now());
   });
 };
 

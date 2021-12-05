@@ -5,8 +5,8 @@ exports.up = function (knex) {
     table.string('email').notNullable();
     table.string('password');
     table.string('role');
-    table.datetime('created_at').defaultTo(knex.fn.now());
-    table.datetime('updated_at').defaultTo(knex.fn.now());
+    // table.datetime('created_at').defaultTo(knex.fn.now());
+    // table.datetime('updated_at').defaultTo(knex.fn.now());
   });
 };
 

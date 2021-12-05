@@ -1,0 +1,6 @@
+node_modules
+_templates
+.git
+.gitignore
+Dockerfile
+.env.example

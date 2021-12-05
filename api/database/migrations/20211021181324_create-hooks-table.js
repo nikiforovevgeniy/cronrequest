@@ -5,11 +5,11 @@ exports.up = function (knex) {
     table.string('name').notNullable();
     table.text('url').notNullable();
     table.string('method').notNullable();
-    table.json('body');
-    table.json('query');
-    table.json('headers');
-    table.datetime('created_at').defaultTo(knex.fn.now());
-    table.datetime('updated_at').defaultTo(knex.fn.now());
+    table.text('body');
+    table.text('query');
+    table.text('headers');
+    // table.datetime('created_at').defaultTo(knex.fn.now());
+    // table.datetime('updated_at').defaultTo(knex.fn.now());
   });
 };
 

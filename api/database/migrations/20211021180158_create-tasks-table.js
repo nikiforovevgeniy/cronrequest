@@ -4,12 +4,12 @@ exports.up = function (knex) {
     table.string('name').notNullable();
     table.uuid('hook_id').notNullable();
     table.uuid('user_id').notNullable();
-    table.datetime('start_at').defaultTo(knex.fn.now());
+    table.datetime('start_at').notNullable();
     table.integer('repeat_cnt').defaultTo(0); // -1 for infinity
     table.string('crontime');
     table.boolean('completed').defaultTo(false);
-    table.datetime('created_at').defaultTo(knex.fn.now());
-    table.datetime('updated_at').defaultTo(knex.fn.now());
+    // table.datetime('created_at').defaultTo(knex.fn.now());
+    // table.datetime('updated_at').defaultTo(knex.fn.now());
   });
 };
 
