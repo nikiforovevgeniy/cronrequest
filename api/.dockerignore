@@ -3,4 +3,4 @@ _templates
 .git
 .gitignore
 Dockerfile
-.env.example
+.env*
