@@ -1,4 +1,5 @@
 const bookshelf = require('@/bookshelf');
+const moment = require('moment');
 const { Task, Variable } = require('@/models');
 
 async function getAll({ user }) {
@@ -28,18 +29,39 @@ async function getOne({ user, params: { id } }) {
       return result;
     }, {});
 
-  task.set({ variables });
+  const timezone = task.get('timezone');
+  const start_at = task.get('start_at');
+
+  task.set({
+    start_at: moment(start_at)
+      .utc(true)
+      .utcOffset(timezone)
+      .format('YYYY-MM-DD HH:mm'),
+    variables,
+  });
 
   return task;
 }
 
-async function create({ user, body: { variables, ...data } }) {
+async function create({
+  user,
+  body: { variables, start_at, timezone, ...data },
+}) {
   const transaction = await bookshelf.transaction();
 
   try {
-    const task = await Task.forge(data).set({ user_id: user.id }).save(null, {
-      transacting: transaction,
-    });
+    const task = await Task.forge(data)
+      .set({
+        start_at: moment(start_at)
+          .utcOffset(timezone, true)
+          .utc()
+          .format('YYYY-MM-DD HH:mm'),
+        timezone,
+        user_id: user.id,
+      })
+      .save(null, {
+        transacting: transaction,
+      });
 
     const variablesSavePromiseList = [];
     for (const variable in variables) {
@@ -64,13 +86,27 @@ async function create({ user, body: { variables, ...data } }) {
   }
 }
 
-async function update({ user, params: { id }, body: { variables, ...data } }) {
+async function update({
+  user,
+  params: { id },
+  body: { variables, start_at, timezone, ...data },
+}) {
   const transaction = await bookshelf.transaction();
 
   try {
-    const task = await Task.forge({ id }).save(data, {
-      transacting: transaction,
-    });
+    const task = await Task.forge({ id }).save(
+      {
+        start_at: moment(start_at)
+          .utcOffset(timezone, true)
+          .utc()
+          .format('YYYY-MM-DD HH:mm'),
+        timezone,
+        ...data,
+      },
+      {
+        transacting: transaction,
+      }
+    );
 
     await Variable.where({ task_id: id }).destroy({
       transacting: transaction,

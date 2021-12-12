@@ -16,6 +16,11 @@
         <field-datetime v-model="startAt" :disabled="loading.item" />
       </div>
 
+      <div class="flex flex-col">
+        <div>Часовой пояс</div>
+        <field-number v-model="task.timezone" :disabled="loading.item" />
+      </div>
+
       <field-checkbox v-model="isRepeat">Повторяющаяся</field-checkbox>
 
       <div v-if="isRepeat" class="flex flex-col">
@@ -36,15 +41,17 @@
     <div class="flex flex-col p-4 gap-3">
       <div class="font-semibold">Переменные хука</div>
 
-      <template v-for="variable in availableVariables" :key="variable">
-        <div class="flex flex-col">
-          <div>${{ variable }}</div>
-          <field-textarea
-            v-model="task.variables[variable]"
-            :disabled="loading.item"
-          />
-        </div>
-      </template>
+      <div
+        class="flex flex-col"
+        v-for="variable in availableVariables"
+        :key="variable"
+      >
+        <div>${{ variable }}</div>
+        <field-textarea
+          v-model="task.variables[variable]"
+          :disabled="loading.item"
+        />
+      </div>
     </div>
   </div>
 </template>

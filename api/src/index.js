@@ -9,7 +9,7 @@ const config = require('@/config');
     require('@/rbac');
     require('@/passport');
     require('@/routes');
-    // require('@/cronjob');
+    require('@/cronjob');
   } catch (error) {
     console.error(error);
   }

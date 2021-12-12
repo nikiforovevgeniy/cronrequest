@@ -5,6 +5,7 @@ exports.up = function (knex) {
     table.uuid('hook_id').notNullable();
     table.uuid('user_id').notNullable();
     table.datetime('start_at').notNullable();
+    table.integer('timezone').defaultTo(0);
     table.integer('repeat_cnt').defaultTo(0); // -1 for infinity
     table.string('crontime');
     table.boolean('completed').defaultTo(false);
